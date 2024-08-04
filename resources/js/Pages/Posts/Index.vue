@@ -15,7 +15,7 @@
       </div>
     </template>
     <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
-      <CardBlogPost v-for="post in posts" :key="post.id">
+      <CardBlogPost v-for="post in posts.data" :key="post.id">
         <header>
           <img :src="post.image"
                alt="{{ post.title }}"
@@ -28,14 +28,14 @@
           </Link>
         </header>
         <main>
-          <div class="flex justify-between">
+          <div class="flex justify-between items-center space-y-2 text-xs">
             <div>Categroy</div>
             <div>Likes</div>
           </div>
           <div class="flex justify-between items-center uppercase text-sm text-gray-500">
 
             <div class="flex space-x-4 ">
-              <div>BY <span class="text-orange-500 font-semibold">User</span></div>
+              <div>BY <span class="text-orange-500 font-semibold">{{ post.user.username }}</span></div>
               <div>date</div>
             </div>
             <div>
@@ -57,11 +57,14 @@
         </footer>
       </CardBlogPost>
     </div>
+    <Pagination :meta="posts.meta" class="mt-4" />
   </AppLayout>
 </template>
 <script lang="ts" setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
 import CardBlogPost from "@/Components/CardBlogPost.vue";
+import Pagination from "@/Components/Pagination.vue";
+
 import { Link } from "@inertiajs/vue3";
 import { ArrowRightCircleIcon } from "@heroicons/vue/24/outline";
 
