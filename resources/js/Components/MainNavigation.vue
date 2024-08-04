@@ -52,8 +52,8 @@ const menu = [
   },
   {
     name: "Blog",
-    url: route("blog"),
-    route: "blog"
+    url: route("posts.index"),
+    route: "posts.index"
   },
   {
     name: "Contact",

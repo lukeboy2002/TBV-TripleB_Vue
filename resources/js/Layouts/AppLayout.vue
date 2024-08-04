@@ -24,7 +24,7 @@ defineProps({
           <slot name="hero" />
         </div>
 
-        <div v-if="$slots.side" class="mx-auto flex max-w-7xl flex-wrap py-10 sm:px-6 lg:px-8">
+        <div v-if="$slots.side" class="mx-auto flex max-w-7xl flex-wrap sm:px-6 lg:px-8">
           <main class="flex w-full flex-col px-3 md:w-3/4">
             <slot />
           </main>
@@ -33,7 +33,7 @@ defineProps({
           </aside>
         </div>
 
-        <div v-else class="mx-auto max-w-7xl py-10 sm:px-6 lg:px-8">
+        <div v-else class="mx-auto max-w-7xl sm:px-6 lg:px-8">
           <slot />
         </div>
 
