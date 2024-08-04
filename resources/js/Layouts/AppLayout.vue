@@ -1,5 +1,4 @@
 <script setup>
-import Banner from "@/Components/Banner.vue";
 import Footer from "@/Components/Footer.vue";
 
 import { Head } from "@inertiajs/vue3";
@@ -12,31 +11,33 @@ defineProps({
 </script>
 
 <template>
-  <div class="grid min-h-[100dvh] grid-rows-[auto_1fr_auto]">
+  <div class="flex justify-between flex-col h-dvh">
     <Head :title="title" />
-    <Banner />
-    <MainNavigation />
+    
+    <div>
+      <Banner />
+      <MainNavigation />
+      <section class="px-0">
+        <div v-if="$slots.hero"
+             class="relative h-124">
+          <slot name="hero" />
+        </div>
 
-    <section class="px-0">
-      <div v-if="$slots.hero"
-           class="relative h-124">
-        <slot name="hero" />
-      </div>
+        <div v-if="$slots.side" class="mx-auto flex max-w-7xl flex-wrap py-10 sm:px-6 lg:px-8">
+          <main class="flex w-full flex-col px-3 md:w-3/4">
+            <slot />
+          </main>
+          <aside class="flex w-full flex-col px-3 md:w-1/4">
+            <slot name="side" />
+          </aside>
+        </div>
 
-      <div v-if="$slots.side" class="mx-auto flex max-w-7xl flex-wrap py-10 sm:px-6 lg:px-8">
-        <main class="flex w-full flex-col px-3 md:w-3/4">
+        <div v-else class="mx-auto max-w-7xl py-10 sm:px-6 lg:px-8">
           <slot />
-        </main>
-        <aside class="flex w-full flex-col px-3 md:w-1/4">
-          <slot name="side" />
-        </aside>
-      </div>
+        </div>
 
-      <div v-else class="mx-auto max-w-7xl py-10 sm:px-6 lg:px-8">
-        <slot />
-      </div>
-
-    </section>
+      </section>
+    </div>
 
     <Footer />
   </div>
