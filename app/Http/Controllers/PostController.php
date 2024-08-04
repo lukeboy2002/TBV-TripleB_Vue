@@ -5,18 +5,27 @@ namespace App\Http\Controllers;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 
 class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    //    public function index()
+    //    {
+    //        return inertia('Posts/Index', [
+    //            'posts' => PostResource::collection(Post::with('user')
+    //                ->where('published_at', '<=', Carbon::now())
+    //                ->latest()
+    //                ->latest('id')
+    //                ->paginate()),
+    //        ]);
+    //    }
     public function index()
     {
         return inertia('Posts/Index', [
             'posts' => PostResource::collection(Post::with('user')
-                ->where('published_at', '<=', Carbon::now())
+//                ->where('published_at', '<=', Carbon::now())
                 ->latest()
                 ->latest('id')
                 ->paginate()),
