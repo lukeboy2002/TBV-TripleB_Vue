@@ -20,4 +20,11 @@ class Post extends Model
     {
         return $this->hasMany(Comment::class);
     }
+
+    protected function casts(): array
+    {
+        return [
+            'published_at' => 'datetime',
+        ];
+    }
 }
