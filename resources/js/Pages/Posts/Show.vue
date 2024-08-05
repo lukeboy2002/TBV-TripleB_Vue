@@ -42,7 +42,10 @@
       <div v-for="comment in comments.data" :key="comment.id">
         <Comment :comment="comment" />
       </div>
-      <Pagination :meta="comments.meta" />
+      <Pagination :meta="comments.meta"
+                  :only="['comments']"
+                  class="mt-4"
+      />
     </div>
     <template #side>
       <h3 class="text-orange-500 font-bold text-xl">To be continued</h3>

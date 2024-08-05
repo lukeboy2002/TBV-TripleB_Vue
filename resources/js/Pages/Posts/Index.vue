@@ -55,7 +55,10 @@
         </footer>
       </CardBlogPost>
     </div>
-    <Pagination :meta="posts.meta" class="mt-4" />
+    <Pagination :meta="posts.meta"
+                :only="['posts']"
+                class="mt-4"
+    />
   </AppLayout>
 </template>
 <script lang="ts" setup>

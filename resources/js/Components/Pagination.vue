@@ -1,8 +1,14 @@
 <template>
   <div class="flex items-center justify-between border-t border-orange-500/30 py-3">
     <div class="flex flex-1 justify-between lg:hidden">
-      <ButtonPrimary :href="previousUrl" :only="only"> Previous</ButtonPrimary>
-      <ButtonPrimary :href="nextUrl" :only="only"> Next</ButtonPrimary>
+      <Link :href="previousUrl" :only="only"
+            class="inline-flex items-center rounded-md bg-orange-500 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white hover:bg-orange-700 focus:outline-none focus:bg-orange-700 transition duration-150 ease-in-out">
+        Previous
+      </Link>
+      <Link :href="nextUrl" :only="only"
+            class="inline-flex items-center rounded-md bg-orange-500 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white hover:bg-orange-700 focus:outline-none focus:bg-orange-700 transition duration-150 ease-in-out">
+        Next
+      </Link>
     </div>
     <div
       class="hidden lg:flex lg:flex-1 lg:items-center lg:justify-between"
@@ -54,7 +60,6 @@
 <script setup>
 import { Link } from "@inertiajs/vue3";
 import { computed } from "vue";
-import ButtonPrimary from "@/Components/ButtonPrimary.vue";
 
 const props = defineProps({
   meta: {
