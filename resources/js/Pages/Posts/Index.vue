@@ -21,11 +21,9 @@
                alt="{{ post.title }}"
                class="h-48 w-full object-cover object-top my-6"
           />
-          <Link :href="route('posts.show', post.id)"
-                class="text-gray-600 hover:text-orange-500 focus:outline-none focus:text-orange-500 font-heading tracking-wide text-xl font-bold uppercase transition duration-150 ease-in-out"
-          >
+          <LinkDefault :href="route('posts.show', post.id)" class="text-xl">
             {{ post.title }}
-          </Link>
+          </LinkDefault>
         </header>
         <main>
           <div class="flex justify-between items-center space-y-2 text-xs">
@@ -36,7 +34,7 @@
 
             <div class="flex space-x-4 ">
               <div>BY <span class="text-orange-500 font-semibold">{{ post.user.username }}</span></div>
-              <div>date</div>
+              <div>{{ formattedDate(post) }}</div>
             </div>
             <div>
               Comment(s)
@@ -64,11 +62,15 @@
 import AppLayout from "@/Layouts/AppLayout.vue";
 import CardBlogPost from "@/Components/CardBlogPost.vue";
 import Pagination from "@/Components/Pagination.vue";
+import LinkDefault from "@/Components/LinkDefault.vue";
 
 import { Link } from "@inertiajs/vue3";
 import { ArrowRightCircleIcon } from "@heroicons/vue/24/outline";
+import { relativeDate } from "@/Utilities/date.js";
 
 defineProps(["posts"]);
+
+const formattedDate = (post) => relativeDate(post.created_at);
 
 const getShortBody = (body) => {
   const maxLength = 400; // You can adjust the length as needed
