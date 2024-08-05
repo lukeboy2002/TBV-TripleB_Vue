@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -16,6 +17,7 @@ Route::get('/', function () {
 
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
+Route::post('posts/{post}/comments', [CommentController::class, 'store'])->name('posts.comments.store');
 
 Route::get('/gallery', function () {
     return Inertia::render('Gallery');
@@ -35,9 +37,6 @@ Route::get('/events', function () {
 Route::get('/shop', function () {
     return Inertia::render('Shop');
 })->name('shop');
-Route::get('/blog', function () {
-    return Inertia::render('Blog');
-})->name('blog');
 Route::get('/contact', function () {
     return Inertia::render('Contact');
 })->name('contact');
