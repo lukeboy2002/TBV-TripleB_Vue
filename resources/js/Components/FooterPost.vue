@@ -1,6 +1,6 @@
 <template>
   <div class="hidden md:w-1/3 lg:w-3/5 md:block md:mt-4 md:max-w-7xl">
-    <div class="text-xl font-black text-orange-500 font-heading tracking-widest pb-4">
+    <div class="text-xl font-black text-orange-500 font-heading tracking-widest pb-4 ">
       OUR BLOG
     </div>
     <div class="flex justify-between gap-4 pb-4">
