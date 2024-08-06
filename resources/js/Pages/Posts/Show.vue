@@ -38,7 +38,33 @@
     </Article>
 
     <div class="ml-6 pt-4">
-      <h3 class="text-xl font-black text-orange-500 tracking-widest border-l-4 border-orange-500 pl-2">Comments </h3>
+      <h3 class="text-xl font-black text-orange-500 tracking-widest border-l-4 border-orange-500 pl-2 mb-4">
+        Comments
+      </h3>
+
+      <form v-if="$page.props.auth.user"
+            @submit.prevent="addComment"
+      >
+        <div>
+          <InputLabel class="sr-only" for="body">Comment</InputLabel>
+          <TextArea id="body" v-model="commentForm.body" placeholder="Leave a comment" />
+          <InputError :message="commentForm.errors.body" class="mt-1" />
+        </div>
+        <div class="flex justify-end">
+          <ButtonPrimary :disabled="commentForm.processing"
+                         class="mt-2"
+                         type="submit"
+          >Add Comment
+          </ButtonPrimary>
+        </div>
+      </form>
+      <div v-else>
+        <div class="flex justify-end items-center space-x-1">
+          <p class="text-gray-900 dark:text-white text-xs">Only registered users can leave a comment.</p>
+          <LinkReversed :href="route('login')" class="text-xs"> Login</LinkReversed>
+        </div>
+      </div>
+
       <div v-for="comment in comments.data" :key="comment.id">
         <Comment :comment="comment" />
       </div>
@@ -46,6 +72,7 @@
                   :only="['comments']"
                   class="mt-4"
       />
+
     </div>
     <template #side>
       <h3 class="text-orange-500 font-bold text-xl">To be continued</h3>
@@ -55,15 +82,31 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
 import Article from "@/Components/Article.vue";
+import Comment from "@/Components/Comment.vue";
+import Pagination from "@/Components/Pagination.vue";
+import TextArea from "@/Components/form/TextArea.vue";
+import InputLabel from "@/Components/form/InputLabel.vue";
+import InputError from "@/Components/form/InputError.vue";
+import ButtonPrimary from "@/Components/ButtonPrimary.vue";
 
 import { HeartIcon } from "@heroicons/vue/24/outline";
 import { relativeDate } from "@/Utilities/date.js";
 import { computed } from "vue";
-import Comment from "@/Components/Comment.vue";
-import Pagination from "@/Components/Pagination.vue";
+import { useForm } from "@inertiajs/vue3";
+import LinkReversed from "@/Components/LinkReversed.vue";
+
 
 const props = defineProps(["post", "comments"]);
 
 const formattedDate = computed(() => relativeDate(props.post.created_at));
+
+const commentForm = useForm({
+  body: ""
+});
+
+const addComment = () => commentForm.post(route("posts.comments.store", props.post.id), {
+  preserveScroll: true,
+  onSuccess: () => commentForm.reset()
+});
 
 </script>
