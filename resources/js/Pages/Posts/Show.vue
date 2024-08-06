@@ -66,7 +66,7 @@
       </div>
 
       <div v-for="comment in comments.data" :key="comment.id">
-        <Comment :comment="comment" />
+        <Comment :comment="comment" @delete="deleteComment" />
       </div>
       <Pagination :meta="comments.meta"
                   :only="['comments']"
@@ -92,9 +92,8 @@ import ButtonPrimary from "@/Components/ButtonPrimary.vue";
 import { HeartIcon } from "@heroicons/vue/24/outline";
 import { relativeDate } from "@/Utilities/date.js";
 import { computed } from "vue";
-import { useForm } from "@inertiajs/vue3";
+import { router, useForm } from "@inertiajs/vue3";
 import LinkReversed from "@/Components/LinkReversed.vue";
-
 
 const props = defineProps(["post", "comments"]);
 
@@ -107,6 +106,13 @@ const commentForm = useForm({
 const addComment = () => commentForm.post(route("posts.comments.store", props.post.id), {
   preserveScroll: true,
   onSuccess: () => commentForm.reset()
+});
+
+const deleteComment = (commentId) => router.delete(route("comments.destroy", {
+  comment: commentId,
+  page: props.comments.meta.current_page
+}), {
+  preserveScroll: true
 });
 
 </script>

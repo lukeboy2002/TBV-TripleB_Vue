@@ -31,13 +31,21 @@
           <PencilSquareIcon class="size-4" />
         </ButtonIcon>
       </form>
-      <form v-if="comment.can?.delete"
-            @submit.prevent="deleteComment">
-        <ButtonIcon
-          class="text-red-500 border-red-500 hover:bg-red-500 hover:text-white focus:bg-red-500 focus:text-white">
-          <TrashIcon class="size-4" />
-        </ButtonIcon>
-      </form>
+      <!--      <form v-if="comment.can?.delete"-->
+      <!--            @submit.prevent="deleteComment">-->
+      <!--        <ButtonIcon-->
+      <!--          class="text-red-500 border-red-500 hover:bg-red-500 hover:text-white focus:bg-red-500 focus:text-white">-->
+      <!--          <TrashIcon class="size-4" />-->
+      <!--        </ButtonIcon>-->
+      <!--      </form>-->
+      <div class="mt-2 text-right empty:hidden">
+        <form v-if="comment.can?.delete" @submit.prevent="$emit('delete', comment.id)">
+          <ButtonIcon
+            class="text-red-500 border-red-500 hover:bg-red-500 hover:text-white focus:bg-red-500 focus:text-white">
+            <TrashIcon class="size-4" />
+          </ButtonIcon>
+        </form>
+      </div>
 
     </footer>
   </Article>
@@ -48,11 +56,9 @@ import ButtonIcon from "@/Components/ButtonIcon.vue";
 
 import { HeartIcon, PencilSquareIcon, TrashIcon } from "@heroicons/vue/24/outline/index.js";
 import { relativeDate } from "@/Utilities/date.js";
-import { router } from "@inertiajs/vue3";
 
 const props = defineProps(["comment"]);
 
-const deleteComment = () => router.delete(route("comments.destroy", props.comment.id), {
-  preserveScroll: true
-});
+const emit = defineEmits(["delete"]);
+
 </script>
