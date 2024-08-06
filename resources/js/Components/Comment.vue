@@ -31,7 +31,7 @@
           <PencilSquareIcon class="size-4" />
         </ButtonIcon>
       </form>
-      <form v-if="canDelete"
+      <form v-if="comment.can?.delete"
             @submit.prevent="deleteComment">
         <ButtonIcon
           class="text-red-500 border-red-500 hover:bg-red-500 hover:text-white focus:bg-red-500 focus:text-white">
@@ -48,14 +48,11 @@ import ButtonIcon from "@/Components/ButtonIcon.vue";
 
 import { HeartIcon, PencilSquareIcon, TrashIcon } from "@heroicons/vue/24/outline/index.js";
 import { relativeDate } from "@/Utilities/date.js";
-import { router, usePage } from "@inertiajs/vue3";
-import { computed } from "vue";
+import { router } from "@inertiajs/vue3";
 
 const props = defineProps(["comment"]);
 
 const deleteComment = () => router.delete(route("comments.destroy", props.comment.id), {
   preserveScroll: true
 });
-
-const canDelete = computed(() => props.comment.user.id === usePage().props.auth.user?.id);
 </script>
