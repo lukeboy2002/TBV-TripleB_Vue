@@ -24,16 +24,38 @@
     <main class="break-words rounded-lg p-3 text-sm font-normal italic text-gray-500">
       {{ comment.body }}
     </main>
-    <footer class="flex justify-end items-center text-xs">
-      footer
+    <footer class="flex justify-end items-center text-xs space-x-1">
+      <form>
+        <ButtonIcon
+          class="text-green-500 border-green-500 hover:bg-green-500 hover:text-white focus:bg-green-500 focus:text-white">
+          <PencilSquareIcon class="size-4" />
+        </ButtonIcon>
+      </form>
+      <form v-if="canDelete"
+            @submit.prevent="deleteComment">
+        <ButtonIcon
+          class="text-red-500 border-red-500 hover:bg-red-500 hover:text-white focus:bg-red-500 focus:text-white">
+          <TrashIcon class="size-4" />
+        </ButtonIcon>
+      </form>
+
     </footer>
   </Article>
 </template>
 <script setup>
 import Article from "@/Components/Article.vue";
+import ButtonIcon from "@/Components/ButtonIcon.vue";
 
-import { HeartIcon } from "@heroicons/vue/24/outline/index.js";
+import { HeartIcon, PencilSquareIcon, TrashIcon } from "@heroicons/vue/24/outline/index.js";
 import { relativeDate } from "@/Utilities/date.js";
+import { router, usePage } from "@inertiajs/vue3";
+import { computed } from "vue";
 
-defineProps(["comment"]);
+const props = defineProps(["comment"]);
+
+const deleteComment = () => router.delete(route("comments.destroy", props.comment.id), {
+  preserveScroll: true
+});
+
+const canDelete = computed(() => props.comment.user.id === usePage().props.auth.user?.id);
 </script>
