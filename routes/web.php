@@ -44,7 +44,6 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
-    Route::post('posts/{post}/comments', [CommentController::class, 'store'])->name('posts.comments.store');
-    Route::delete('comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
 
+    Route::resource('posts.comments', CommentController::class)->shallow()->only('store', 'update', 'destroy');
 });

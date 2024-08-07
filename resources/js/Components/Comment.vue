@@ -25,7 +25,6 @@
       {{ comment.body }}
     </main>
     <footer class="flex justify-end items-center text-xs space-x-1 empty:hidden">
-      9098
       <form v-if="comment.can?.delete" @submit.prevent="$emit('delete', comment.id)">
         <ButtonIcon
           class="text-red-500 border-red-500 hover:bg-red-500 hover:text-white focus:bg-red-500 focus:text-white">
