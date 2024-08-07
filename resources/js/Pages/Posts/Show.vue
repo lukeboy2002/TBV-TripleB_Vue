@@ -41,23 +41,31 @@
       <h3 class="text-xl font-black text-orange-500 tracking-widest border-l-4 border-orange-500 pl-2 mb-4">
         Comments
       </h3>
-
-      <form v-if="$page.props.auth.user"
-            @submit.prevent="addComment"
-      >
+      <form v-if="$page.props.auth.user" class="mt-4"
+            @submit.prevent="() => commentIdBeingEdited ? updateComment() : addComment()">
         <div>
           <InputLabel class="sr-only" for="body">Comment</InputLabel>
-          <TextArea id="body" v-model="commentForm.body" placeholder="Leave a comment" />
-          <InputError :message="commentForm.errors.body" class="mt-1" />
+          <TextArea id="body"
+                    ref="commentTextAreaRef"
+                    v-model="commentForm.body"
+                    placeholder="Leave a comment"
+          />
+          <InputError :message="commentForm.errors.body"
+                      class="mt-1"
+          />
         </div>
-        <div class="flex justify-end">
-          <ButtonPrimary :disabled="commentForm.processing"
-                         class="mt-2"
-                         type="submit"
-          >Add Comment
-          </ButtonPrimary>
+
+        <div class="mt-3 flex justify-end space-x-2">
+          <ButtonPrimary :disabled="commentForm.processing" type="submit"
+                         v-text="commentIdBeingEdited ? 'Update Comment' : 'Add Comment'"></ButtonPrimary>
+          <ButtonSecondary v-if="commentIdBeingEdited"
+                           @click="cancelEditComment">
+            Cancel
+          </ButtonSecondary>
         </div>
       </form>
+
+
       <div v-else>
         <div class="flex justify-end items-center space-x-1">
           <p class="text-gray-900 dark:text-white text-xs">Only registered users can leave a comment.</p>
@@ -66,13 +74,14 @@
       </div>
 
       <div v-for="comment in comments.data" :key="comment.id">
-        <Comment :comment="comment" @delete="deleteComment" />
+        <Comment :comment="comment"
+                 @delete="deleteComment"
+                 @edit="editComment" />
       </div>
       <Pagination :meta="comments.meta"
                   :only="['comments']"
                   class="mt-4"
       />
-
     </div>
     <template #side>
       <h3 class="text-orange-500 font-bold text-xl">To be continued</h3>
@@ -91,9 +100,10 @@ import ButtonPrimary from "@/Components/ButtonPrimary.vue";
 
 import { HeartIcon } from "@heroicons/vue/24/outline";
 import { relativeDate } from "@/Utilities/date.js";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { router, useForm } from "@inertiajs/vue3";
 import LinkReversed from "@/Components/LinkReversed.vue";
+import ButtonSecondary from "@/Components/ButtonSecondary.vue";
 
 const props = defineProps(["post", "comments"]);
 
@@ -103,9 +113,31 @@ const commentForm = useForm({
   body: ""
 });
 
+const commentTextAreaRef = ref(null);
+const commentIdBeingEdited = ref(null);
+const commentBeingEdited = computed(() => props.comments.data.find(comment => comment.id === commentIdBeingEdited.value));
+const editComment = (commentId) => {
+  commentIdBeingEdited.value = commentId;
+  commentForm.body = commentBeingEdited.value?.body;
+  commentTextAreaRef.value?.focus();
+};
+
+const cancelEditComment = () => {
+  commentIdBeingEdited.value = null;
+  commentForm.reset();
+};
+
 const addComment = () => commentForm.post(route("posts.comments.store", props.post.id), {
   preserveScroll: true,
   onSuccess: () => commentForm.reset()
+});
+
+const updateComment = () => commentForm.put(route("comments.update", {
+  comment: commentIdBeingEdited.value,
+  page: props.comments.meta.current_page
+}), {
+  preserveScroll: true,
+  onSuccess: cancelEditComment
 });
 
 const deleteComment = (commentId) => router.delete(route("comments.destroy", {

@@ -25,6 +25,12 @@
       {{ comment.body }}
     </main>
     <footer class="flex justify-end items-center text-xs space-x-1 empty:hidden">
+      <form v-if="comment.can?.update" @submit.prevent="$emit('edit', comment.id)">
+        <ButtonIcon
+          class="text-green-500 border-green-500 hover:bg-green-500 hover:text-white focus:bg-green-500 focus:text-white">
+          <PencilSquareIcon class="size-4" />
+        </ButtonIcon>
+      </form>
       <form v-if="comment.can?.delete" @submit.prevent="$emit('delete', comment.id)">
         <ButtonIcon
           class="text-red-500 border-red-500 hover:bg-red-500 hover:text-white focus:bg-red-500 focus:text-white">
@@ -38,11 +44,12 @@
 import Article from "@/Components/Article.vue";
 import ButtonIcon from "@/Components/ButtonIcon.vue";
 
-import { HeartIcon, TrashIcon } from "@heroicons/vue/24/outline/index.js";
+import { HeartIcon, PencilSquareIcon, TrashIcon } from "@heroicons/vue/24/outline/index.js";
 import { relativeDate } from "@/Utilities/date.js";
 
 const props = defineProps(["comment"]);
 
-const emit = defineEmits(["delete"]);
+const emit = defineEmits(["edit", "delete"]);
+
 
 </script>
