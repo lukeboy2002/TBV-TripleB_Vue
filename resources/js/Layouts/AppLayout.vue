@@ -4,6 +4,7 @@ import Footer from "@/Components/Footer.vue";
 
 import { Head } from "@inertiajs/vue3";
 import MainNavigation from "@/Components/MainNavigation.vue";
+import ModalWrapper from "@/Components/ModalWrapper.vue";
 
 defineProps({
   title: String
@@ -41,5 +42,7 @@ defineProps({
     </div>
 
     <Footer />
+
+    <ModalWrapper />
   </div>
 </template>
