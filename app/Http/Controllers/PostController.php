@@ -41,9 +41,6 @@ class PostController extends Controller
         $data = $request->validate([
             'title' => ['required', 'string', 'min:10', 'max:120'],
             'body' => ['required', 'string', 'min:100', 'max:10000'],
-            'image' => ['required'],
-            'published_at' => ['date'],
-            'featured' => ['boolean'],
         ]);
 
         $post = Post::create([
@@ -59,7 +56,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //        return inertia('Posts/Create');
+        return inertia('Posts/Create');
     }
 
     /**

@@ -15,8 +15,6 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
-Route::resource('posts', PostController::class)->only('index', 'show');
-
 Route::get('/gallery', function () {
     return Inertia::render('Gallery');
 })->name('galley');
@@ -47,3 +45,5 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::resource('posts', PostController::class)->only('create', 'store');
     Route::resource('posts.comments', CommentController::class)->shallow()->only('store', 'update', 'destroy');
 });
+
+Route::resource('posts', PostController::class)->only('index', 'show');
