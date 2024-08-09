@@ -23,6 +23,7 @@
     },
     "dependencies": {
         "@heroicons/vue": "^2.1.5",
+        "@vuepic/vue-datepicker": "^9.0.1",
         "date-fns": "^3.6.0",
         "flowbite": "^2.4.1"
     }

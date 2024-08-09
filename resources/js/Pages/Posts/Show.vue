@@ -108,7 +108,7 @@ import { useConfirm } from "@/Utilities/Composables/useConfirm.js";
 
 const props = defineProps(["post", "comments"]);
 
-const formattedDate = computed(() => relativeDate(props.post.created_at));
+const formattedDate = computed(() => relativeDate(props.post.published_at));
 
 const commentForm = useForm({
   body: ""

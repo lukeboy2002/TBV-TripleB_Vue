@@ -73,7 +73,7 @@ import { relativeDate } from "@/Utilities/date.js";
 
 defineProps(["posts"]);
 
-const formattedDate = (post) => relativeDate(post.created_at);
+const formattedDate = (post) => relativeDate(post.published_at);
 
 const getShortBody = (body) => {
   const maxLength = 400; // You can adjust the length as needed

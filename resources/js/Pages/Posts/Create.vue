@@ -38,6 +38,7 @@
       <div class="flex justify-between items-center space-x-4">
         <div class="w-1/2">
           Published
+          <VueDatePicker v-model="form.published_at"></VueDatePicker>
         </div>
         <div class="w-1/2">
           <label class="inline-flex items-center me-5 cursor-pointer">
@@ -70,9 +71,17 @@ import ButtonPrimary from "@/Components/ButtonPrimary.vue";
 
 import { useForm } from "@inertiajs/vue3";
 
+import { ref } from "vue";
+import VueDatePicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
+
+const date = ref();
+
+
 const form = useForm({
   title: "",
   body: "",
+  published_at: "",
   featured: false
 });
 
