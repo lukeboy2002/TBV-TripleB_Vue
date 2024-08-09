@@ -18,9 +18,6 @@
           @submit.prevent="createPost">
       <div>
         Image
-        <!--        <InputLabel for="image"> Featured Image</InputLabel>-->
-        <!--        <TextInput id="image" v-model="form.image" type="file" />-->
-        <!--        <InputError :message="form.errors.image" class="mt-1" />-->
       </div>
 
       <div class="flex justify-between items-center space-x-4">
@@ -76,7 +73,7 @@ import { useForm } from "@inertiajs/vue3";
 const form = useForm({
   title: "",
   body: "",
-  featured: ""
+  featured: false
 });
 
 const createPost = () => form.post(route("posts.store"));

@@ -42,6 +42,8 @@ class PostController extends Controller
         $data = $request->validate([
             'title' => ['required', 'string', 'min:10', 'max:120'],
             'body' => ['required', 'string', 'min:100', 'max:10000'],
+            'image' => ['nullable'],
+            'published_at' => ['nullable', 'date'],
             'featured' => ['boolean'],
         ]);
 
