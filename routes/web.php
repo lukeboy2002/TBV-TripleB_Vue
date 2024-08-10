@@ -46,4 +46,5 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::resource('posts.comments', CommentController::class)->shallow()->only('store', 'update', 'destroy');
 });
 
-Route::resource('posts', PostController::class)->only('index', 'show');
+Route::get('posts/{post}/{slug?}', [PostController::class, 'show'])->name('posts.show');
+Route::get('posts', [PostController::class, 'index'])->name('posts.index');

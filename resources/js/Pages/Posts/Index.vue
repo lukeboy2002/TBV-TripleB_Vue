@@ -17,11 +17,11 @@
     <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
       <CardBlogPost v-for="post in posts.data" :key="post.id">
         <header>
-          <img :src="post.image"
-               alt="{{ post.title }}"
+          <img :alt="post.title"
+               :src="post.image"
                class="h-48 w-full object-cover object-top my-6"
           />
-          <LinkDefault :href="route('posts.show', post.id)" class="text-xl">
+          <LinkDefault :href="post.routes.show" class="text-xl">
             {{ post.title }}
           </LinkDefault>
         </header>
@@ -46,7 +46,7 @@
           </p>
         </main>
         <footer class="flex justify-end">
-          <Link :href="route('posts.show', post.id)"
+          <Link :href="post.routes.show"
                 class="inline-flex items-center text-orange-500 hover:text-gray-600 focus:outline-none focus:text-gray-600 transition duration-150 ease-in-out"
           >
             Read More
