@@ -6,6 +6,7 @@ use App\Http\Resources\CommentResource;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Storage;
 
 class PostController extends Controller
@@ -63,8 +64,10 @@ class PostController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Post $post)
     {
+        Gate::authorize('create', $post);
+
         return inertia('Posts/Create');
     }
 

@@ -4,7 +4,7 @@ import LinkNav from "@/Components/LinkNav.vue";
 import LinkDropdown from "@/Components/LinkDropdown.vue";
 import Dropdown from "@/Components/Dropdown.vue";
 
-import { router } from "@inertiajs/vue3";
+import { router, usePage } from "@inertiajs/vue3";
 import { ref } from "vue";
 import LinkNavResponsive from "@/Components/LinkNavResponsive.vue";
 
@@ -54,6 +54,12 @@ const menu = [
     name: "Blog",
     url: route("posts.index"),
     route: "posts.index"
+  },
+  {
+    name: "Create a Post",
+    url: route("posts.create"),
+    route: "posts.create",
+    when: () => usePage().props.permissions.create_posts
   },
   {
     name: "Contact",
