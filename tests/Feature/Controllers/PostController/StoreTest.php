@@ -10,8 +10,8 @@ beforeEach(function () {
     $this->validData = [
         'title' => 'Hello World',
         'body' => 'Ullamco Lorem consequat sunt elit laboris adipisicing non proident eu est. Veniam ad cupidatat ex commodo mollit eiusmod. Excepteur do cillum incididunt consectetur pariatur ex sunt veniam dolor. Consectetur esse laborum culpa nostrud ut est commodo velit ad consectetur aliqua dolor. Mollit minim sunt mollit ullamco non ex dolore incididunt ullamco occaecat sunt id excepteur. Deserunt aliquip eu laborum cillum nostrud sint dolor reprehenderit minim adipisicing. Enim sit amet et.',
-        'image' => 'r2d2.png',
         'published_at' => now(),
+        //        'image' => 'rd2d.png',
         'featured' => true,
     ];
 });
@@ -37,7 +37,7 @@ it('redirect to the post show page', function () {
 
     actingAs($user)
         ->post(route('posts.store'), $this->validData)
-        ->assertRedirect(route('posts.show', Post::latest('id')->first()));
+        ->assertRedirect(Post::latest('id')->first()->showRoute());
 });
 
 it('requires valid data', function (array $badData, array|string $errors) {
