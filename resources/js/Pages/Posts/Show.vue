@@ -1,8 +1,8 @@
 <template>
   <AppLayout :title="post.title">
     <template #hero>
-      <img :src="post.image"
-           alt="post.title"
+      <img :alt="post.title"
+           :src='"/" +post.image'
            class="absolute inset-0 w-full h-124 object-cover"
       />
       <div class="absolute h-124 inset-0 flex flex-col items-center justify-center">

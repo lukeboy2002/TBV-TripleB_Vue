@@ -17,7 +17,8 @@
     <form class="space-y-4 my-6 border border-orange-500 shadow-lg rounded-lg p-4"
           @submit.prevent="createPost">
       <div>
-        Image
+        <input id="image" type="file" @input="change" />
+        <InputError :message="form.errors.image" class="mt-1" />
       </div>
 
       <div class="flex justify-between items-center space-x-4">
@@ -37,8 +38,9 @@
       </div>
       <div class="flex justify-between items-center space-x-4">
         <div class="w-1/2">
-          Published
-          <VueDatePicker v-model="form.published_at"></VueDatePicker>
+          <VueDatePicker v-model="form.published_at" :enable-time-picker="false" auto-apply />
+
+          <!--          <VueDatePicker v-model="form.published_at"></VueDatePicker>-->
         </div>
         <div class="w-1/2">
           <label class="inline-flex items-center me-5 cursor-pointer">
@@ -77,13 +79,25 @@ import "@vuepic/vue-datepicker/dist/main.css";
 
 const date = ref();
 
+const change = (e) => {
+  form.image = e.target.files[0];
+};
 
 const form = useForm({
-  title: "",
-  body: "",
-  published_at: "",
+  title: null,
+  body: null,
+  image: null,
+  published_at: null,
   featured: false
 });
 
 const createPost = () => form.post(route("posts.store"));
 </script>
+
+<style>
+.dp__theme_light {
+  --dp-primary-color: rgb(249 115 22);
+  --dp-border-color-hover: rgb(249 115 22);
+  --dp-border-color-focus: rgb(249 115 22);
+}
+</style>

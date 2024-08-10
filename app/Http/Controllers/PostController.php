@@ -6,6 +6,7 @@ use App\Http\Resources\CommentResource;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Storage;
 
 class PostController extends Controller
 {
@@ -38,14 +39,18 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //        dd($request->all());
+
         $data = $request->validate([
             'title' => ['required', 'string', 'min:10', 'max:120'],
             'body' => ['required', 'string', 'min:100', 'max:10000'],
-            'image' => ['nullable'],
+            'image' => ['nullable', 'image', 'max:2048'],
             'published_at' => ['nullable', 'date'],
             'featured' => ['boolean'],
         ]);
+
+        if ($request->hasFile('image')) {
+            $data['image'] = Storage::disk('public')->put('/posts', $request->image);
+        }
 
         $post = Post::create([
             ...$data,
