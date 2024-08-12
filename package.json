@@ -23,12 +23,14 @@
     },
     "dependencies": {
         "@heroicons/vue": "^2.1.5",
+        "@tiptap/extension-link": "^2.5.9",
         "@tiptap/pm": "^2.5.9",
         "@tiptap/starter-kit": "^2.5.9",
         "@tiptap/vue-3": "^2.5.9",
         "@vuepic/vue-datepicker": "^9.0.1",
         "date-fns": "^3.6.0",
         "flowbite": "^2.4.1",
+        "remixicon": "^4.3.0",
         "tiptap-markdown": "^0.8.10"
     }
 }
