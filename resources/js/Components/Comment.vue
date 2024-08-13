@@ -21,9 +21,8 @@
         <div>likes</div>
       </div>
     </header>
-    <main class="break-words rounded-lg p-3 text-sm font-normal italic text-gray-500">
-      {{ comment.body }}
-    </main>
+    <main class="p-3 prose prose-sm max-w-none" v-html="comment.html"></main>
+
     <footer class="flex justify-end items-center text-xs space-x-1 empty:hidden">
       <form v-if="comment.can?.update" @submit.prevent="$emit('edit', comment.id)">
         <ButtonIcon

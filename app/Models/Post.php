@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\ConvertsMarkdownToHtml;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,6 +12,7 @@ use Illuminate\Support\Str;
 
 class Post extends Model
 {
+    use ConvertsMarkdownToHtml;
     use HasFactory;
 
     /**
@@ -27,11 +29,6 @@ class Post extends Model
         'published_at',
         'featured',
     ];
-
-    protected static function booted()
-    {
-        static::saving(fn (self $post) => $post->fill(['html' => str($post->body)->markdown()]));
-    }
 
     public function user(): BelongsTo
     {

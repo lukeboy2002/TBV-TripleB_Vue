@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\ConvertsMarkdownToHtml;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Comment extends Model
 {
+    use ConvertsMarkdownToHtml;
     use HasFactory;
 
     /**
@@ -19,6 +21,7 @@ class Comment extends Model
         'user_id',
         'post_id',
         'body',
+        'html',
     ];
 
     public function user(): BelongsTo

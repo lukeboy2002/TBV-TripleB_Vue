@@ -44,11 +44,14 @@
             @submit.prevent="() => commentIdBeingEdited ? updateComment() : addComment()">
         <div>
           <InputLabel class="sr-only" for="body">Comment</InputLabel>
-          <TextArea id="body"
-                    ref="commentTextAreaRef"
-                    v-model="commentForm.body"
-                    placeholder="Leave a comment"
-          />
+
+          <MarkdownEditor id="body" ref="commentTextAreaRef" v-model="commentForm.body" editorClass="min-h-[160px]"
+                          placeholder="Leave a comment" />
+          <!--          <TextArea id="body"-->
+          <!--                    ref="commentTextAreaRef"-->
+          <!--                    v-model="commentForm.body"-->
+          <!--                    placeholder="Leave a comment"-->
+          <!--          />-->
           <InputError :message="commentForm.errors.body"
                       class="mt-1"
           />
@@ -92,7 +95,6 @@ import AppLayout from "@/Layouts/AppLayout.vue";
 import Article from "@/Components/Article.vue";
 import Comment from "@/Components/Comment.vue";
 import Pagination from "@/Components/Pagination.vue";
-import TextArea from "@/Components/form/TextArea.vue";
 import InputLabel from "@/Components/form/InputLabel.vue";
 import InputError from "@/Components/form/InputError.vue";
 import ButtonPrimary from "@/Components/ButtonPrimary.vue";
@@ -104,6 +106,7 @@ import { relativeDate } from "@/Utilities/date.js";
 import { computed, ref } from "vue";
 import { router, useForm } from "@inertiajs/vue3";
 import { useConfirm } from "@/Utilities/Composables/useConfirm.js";
+import MarkdownEditor from "@/Components/MarkdownEditor.vue";
 
 const props = defineProps(["post", "comments"]);
 

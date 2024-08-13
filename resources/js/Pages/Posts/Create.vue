@@ -34,7 +34,6 @@
       <div>
         <InputLabel class="sr-only" for="body"> Title</InputLabel>
         <MarkdownEditor v-model="form.body" />
-        <TextArea id="body" v-model="form.body" class="w-full" placeholder="Your post" rows="5" />
         <InputError :message="form.errors.body" class="mt-1" />
       </div>
       <div class="flex justify-between items-center space-x-4">
@@ -67,7 +66,6 @@ import AppLayout from "@/Layouts/AppLayout.vue";
 import InputLabel from "@/Components/form/InputLabel.vue";
 import TextInput from "@/Components/form/TextInput.vue";
 import InputError from "@/Components/form/InputError.vue";
-import TextArea from "@/Components/form/TextArea.vue";
 import ButtonPrimary from "@/Components/ButtonPrimary.vue";
 import MarkdownEditor from "@/Components/MarkdownEditor.vue";
 
