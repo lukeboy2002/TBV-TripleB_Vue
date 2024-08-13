@@ -26,8 +26,7 @@
           </div>
         </div>
       </header>
-      <main class="text-gray-500 leading-7 whitespace-pre-wrap font-sans">
-        {{ post.body }}
+      <main class="prose prose-sm max-w-none" v-html="post.html">
       </main>
       <footer class="flex justify-end items-center text-gray-500 text-xs">
         <HeartIcon class="mr-1 size-3" />

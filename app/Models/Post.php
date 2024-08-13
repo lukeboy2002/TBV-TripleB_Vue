@@ -22,10 +22,16 @@ class Post extends Model
         'user_id',
         'title',
         'body',
+        'html',
         'image',
         'published_at',
         'featured',
     ];
+
+    protected static function booted()
+    {
+        static::saving(fn (self $post) => $post->fill(['html' => str($post->body)->markdown()]));
+    }
 
     public function user(): BelongsTo
     {

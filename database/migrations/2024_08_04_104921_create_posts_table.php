@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignIdFor(User::class)->constrained()->restrictOnDelete();
             $table->string('title');
             $table->longText('body');
+            $table->longText('html');
             $table->string('image')->nullable();
             $table->timestamp('published_at')->nullable();
             $table->boolean('featured')->default(false);

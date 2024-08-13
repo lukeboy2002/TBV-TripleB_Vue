@@ -41,8 +41,10 @@
             </div>
           </div>
 
-          <p class="mb-5 whitespace-pre-wrap font-light text-gray-700 dark:text-gray-50">
-            {{ getShortBody(post.body) }}
+          <p class="mb-5 whitespace-pre-wrap font-light text-gray-700 dark:text-gray-50"
+             v-html="getShortBody(post.html)">
+
+
           </p>
         </main>
         <footer class="flex justify-end">
@@ -75,11 +77,11 @@ defineProps(["posts"]);
 
 const formattedDate = (post) => relativeDate(post.published_at);
 
-const getShortBody = (body) => {
-  const maxLength = 400; // You can adjust the length as needed
-  if (body.length <= maxLength) {
-    return body;
+const getShortBody = (html) => {
+  const maxLength = 200; // You can adjust the length as needed
+  if (html.length <= maxLength) {
+    return html;
   }
-  return body.substring(0, maxLength) + "...";
+  return html.substring(0, maxLength) + "...";
 };
 </script>
