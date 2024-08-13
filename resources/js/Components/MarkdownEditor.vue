@@ -3,6 +3,33 @@
        class="bg-white rounded-md shadow-lg ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-orange-500">
     <menu class="flex divide-x border-b">
       <li>
+        <button :class="[editor.isActive('heading', { level: 2 }) ? 'bg-orange-500 text-white' : 'hover:bg-gray-200']"
+                class="px-3 py-2"
+                title="Heading 1"
+                type="button"
+                @click="() => editor.chain().focus().toggleHeading({ level: 2 }).run()">
+          <i class="ri-h-1"></i>
+        </button>
+      </li>
+      <li>
+        <button :class="[editor.isActive('heading', { level: 3 }) ? 'bg-orange-500 text-white' : 'hover:bg-gray-200']"
+                class="px-3 py-2"
+                title="Heading 2"
+                type="button"
+                @click="() => editor.chain().focus().toggleHeading({ level: 3 }).run()">
+          <i class="ri-h-2"></i>
+        </button>
+      </li>
+      <li>
+        <button :class="[editor.isActive('heading', { level: 4 }) ? 'bg-orange-500 text-white' : 'hover:bg-gray-200']"
+                class="px-3 py-2"
+                title="Heading 3"
+                type="button"
+                @click="() => editor.chain().focus().toggleHeading({ level: 4 }).run()">
+          <i class="ri-h-3"></i>
+        </button>
+      </li>
+      <li>
         <button :class="[editor.isActive('bold') ? 'bg-orange-500 text-white' : 'hover:bg-gray-200']"
                 class="px-3 py-2 rounded-tl-lg"
                 title="Bold"
@@ -66,39 +93,39 @@
         </button>
       </li>
       <li>
+        <button :class="[editor.isActive('undo',) ? 'bg-orange-500 text-white' : 'hover:bg-gray-200']"
+                class="px-3 py-2"
+                title="Undo"
+                type="button"
+                @click="() => editor.chain().focus().undo().run()">
+          <i class="ri-arrow-go-back-line"></i>
+        </button>
+      </li>
+      <li>
+        <button :class="[editor.isActive('redo',) ? 'bg-orange-500 text-white' : 'hover:bg-gray-200']"
+                class="px-3 py-2"
+                title="Redo"
+                type="button"
+                @click="() => editor.chain().focus().redo().run()">
+          <i class="ri-arrow-go-forward-line"></i>
+        </button>
+      </li>
+      <li>
+        <button :class="[editor.isActive('setHorizontalRule',) ? 'bg-orange-500 text-white' : 'hover:bg-gray-200']"
+                class="px-3 py-2"
+                title="HorizontalRule"
+                type="button"
+                @click="() => editor.chain().setHorizontalRule().run()">
+          Hr
+        </button>
+      </li>
+      <li>
         <button :class="[editor.isActive('link') ? 'bg-orange-500 text-white' : 'hover:bg-gray-200']"
                 class="px-3 py-2"
                 title="Add link"
                 type="button"
                 @click="promptUserForHref">
           <i class="ri-link"></i>
-        </button>
-      </li>
-      <li>
-        <button :class="[editor.isActive('heading', { level: 2 }) ? 'bg-orange-500 text-white' : 'hover:bg-gray-200']"
-                class="px-3 py-2"
-                title="Heading 1"
-                type="button"
-                @click="() => editor.chain().focus().toggleHeading({ level: 2 }).run()">
-          <i class="ri-h-1"></i>
-        </button>
-      </li>
-      <li>
-        <button :class="[editor.isActive('heading', { level: 3 }) ? 'bg-orange-500 text-white' : 'hover:bg-gray-200']"
-                class="px-3 py-2"
-                title="Heading 2"
-                type="button"
-                @click="() => editor.chain().focus().toggleHeading({ level: 3 }).run()">
-          <i class="ri-h-2"></i>
-        </button>
-      </li>
-      <li>
-        <button :class="[editor.isActive('heading', { level: 4 }) ? 'bg-orange-500 text-white' : 'hover:bg-gray-200']"
-                class="px-3 py-2"
-                title="Heading 3"
-                type="button"
-                @click="() => editor.chain().focus().toggleHeading({ level: 4 }).run()">
-          <i class="ri-h-3"></i>
         </button>
       </li>
       <slot :editor="editor" name="toolbar" />
