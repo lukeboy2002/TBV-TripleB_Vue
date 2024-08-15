@@ -26,8 +26,11 @@
           </LinkDefault>
         </header>
         <main>
-          <div class="flex justify-between items-center space-y-2 text-xs">
-            <div>Categroy</div>
+          <div class="flex justify-between items-center space-y-2 text-xs mb-2">
+            <a
+              class="bg-orange-100 text-orange-800 border hover:border-orange-500 focus:outline-none focus:border-orange-500 text-xs font-medium me-2 px-2.5 py-0.5 rounded"
+              href="/">{{ post.category.name }}
+            </a>
             <div>Likes</div>
           </div>
           <div class="flex justify-between items-center uppercase text-sm text-gray-500">

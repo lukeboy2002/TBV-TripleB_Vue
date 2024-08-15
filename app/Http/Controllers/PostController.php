@@ -30,7 +30,7 @@ class PostController extends Controller
     public function index()
     {
         return inertia('Posts/Index', [
-            'posts' => PostResource::collection(Post::with('user')
+            'posts' => PostResource::collection(Post::with(['user', 'category'])
 //                ->where('published_at', '<=', Carbon::now())
                 ->latest()
                 ->latest('id')
@@ -83,7 +83,7 @@ class PostController extends Controller
             return redirect($post->showRoute($request->query()), status: 301);
         }
 
-        $post->load('user');
+        $post->load(['user', 'category']);
 
         return Inertia('Posts/Show', [
             'post' => fn () => PostResource::make($post),

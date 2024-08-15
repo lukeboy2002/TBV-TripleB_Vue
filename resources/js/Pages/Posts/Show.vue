@@ -14,10 +14,11 @@
 
     <Article class="shadow-xl">
       <header class="flex justify-between items-center text-gray-500 mb-4">
-        <div class="flex items-center space-x-4">
-          <div class="text-orange-500 uppercase font-medium">
-            Category
-          </div>
+        <div class="flex items-center space-x-4 mt-6">
+          <a
+            class="bg-orange-100 font-semibold uppercase text-orange-800 border hover:border-orange-500 focus:outline-none focus:border-orange-500 text-xs font-medium me-2 px-2.5 py-0.5 rounded"
+            href="/">{{ post.category.name }}
+          </a>
         </div>
         <div>
           <div class="flex space-x-4 uppercase">
