@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CategoryResource;
 use App\Http\Resources\CommentResource;
 use App\Http\Resources\PostResource;
+use App\Models\Category;
 use App\Models\Post;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
@@ -27,14 +30,17 @@ class PostController extends Controller
     //                ->paginate()),
     //        ]);
     //    }
-    public function index()
+    public function index(?Category $category = null)
     {
+        $posts = Post::with(['user', 'category'])
+            ->when($category, fn (Builder $query) => $query->whereBelongsTo($category))
+            ->latest()
+            ->latest('id')
+            ->paginate();
+
         return inertia('Posts/Index', [
-            'posts' => PostResource::collection(Post::with(['user', 'category'])
-//                ->where('published_at', '<=', Carbon::now())
-                ->latest()
-                ->latest('id')
-                ->paginate()),
+            'posts' => PostResource::collection($posts),
+            'selectedCategory' => fn () => $category ? CategoryResource::make($category) : null,
         ]);
     }
 
