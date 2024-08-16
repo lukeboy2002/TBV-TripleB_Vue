@@ -88,7 +88,16 @@
       />
     </div>
     <template #side>
-      <h3 class="text-orange-500 font-bold text-xl">To be continued</h3>
+      <h3 class="text-orange-500 font-bold text-xl uppercase">Categrories</h3>
+
+      <menu class="ml-2 mt-3 space-y-3">
+        <li v-for="category in categories" :key="category.id">
+          <LinkDefault :href="route('posts.index', { category: category.slug })">
+            {{ category.name }}
+          </LinkDefault>
+        </li>
+      </menu>
+
     </template>
   </AppLayout>
 </template>
@@ -100,7 +109,7 @@ import Pagination from "@/Components/Pagination.vue";
 import InputLabel from "@/Components/form/InputLabel.vue";
 import InputError from "@/Components/form/InputError.vue";
 import ButtonPrimary from "@/Components/ButtonPrimary.vue";
-import LinkReversed from "@/Components/LinkReversed.vue";
+
 import ButtonSecondary from "@/Components/ButtonSecondary.vue";
 
 import { HeartIcon } from "@heroicons/vue/24/outline";
@@ -109,8 +118,9 @@ import { computed, ref } from "vue";
 import { router, useForm } from "@inertiajs/vue3";
 import { useConfirm } from "@/Utilities/Composables/useConfirm.js";
 import MarkdownEditor from "@/Components/MarkdownEditor.vue";
+import LinkDefault from "@/Components/LinkDefault.vue";
 
-const props = defineProps(["post", "comments"]);
+const props = defineProps(["post", "categories", "comments"]);
 
 const formattedDate = computed(() => relativeDate(props.post.published_at));
 

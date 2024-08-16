@@ -21,6 +21,13 @@ it('passes posts to the view', function () {
         ->assertHasPaginatedResource('posts', PostResource::collection($posts->reverse()));
 });
 
+it('passes categories to the view', function () {
+    $categories = Category::factory(3)->create();
+
+    get(route('posts.index'))
+        ->assertHasResource('categories', CategoryResource::collection($categories));
+});
+
 it('can filter by category', function () {
     $general = Category::factory()->create();
     $posts = Post::factory(2)->for($general)->create();

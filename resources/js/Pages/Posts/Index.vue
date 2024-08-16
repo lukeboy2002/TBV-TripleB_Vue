@@ -14,18 +14,24 @@
         </h1>
       </div>
     </template>
-    <div v-if="selectedCategory">
-      <LinkReversed :href="route('posts.index')" class="flex items-center pt-2 pb-4">
-        <BackspaceIcon class="size-4 mr-2" />
-        Back to all Posts
-      </LinkReversed>
-      <div class="ml-2">
-        <div class="text-orange-500 font-black text-xl"
-             v-text="selectedCategory ? selectedCategory.name : 'All Posts'" />
-        <p v-if="selectedCategory" class="text-xs text-gray-700">
-          {{ selectedCategory.description }}
-        </p>
-      </div>
+    <div>
+      <menu class="flex space-x-1 mt-3 overflow-x-auto py-1">
+        <li>
+          <LinkCategory :filled="! selectedCategory" :href="route('posts.index')">
+            All Posts
+          </LinkCategory>
+        </li>
+        <li v-for="category in categories" :key="category.id">
+          <LinkCategory :filled="category.id === selectedCategory?.id"
+                        :href="route('posts.index', { category: category.slug })"
+          >
+            {{ category.name }}
+          </LinkCategory>
+        </li>
+      </menu>
+      <p v-if="selectedCategory" class="mt-1 text-xs text-orange-500 italic empty:hidden">
+        {{ selectedCategory.description }}
+      </p>
     </div>
     <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
       <CardBlogPost v-for="post in posts.data" :key="post.id">
@@ -87,11 +93,11 @@ import Pagination from "@/Components/Pagination.vue";
 import LinkDefault from "@/Components/LinkDefault.vue";
 
 import { Link } from "@inertiajs/vue3";
-import { ArrowRightCircleIcon, BackspaceIcon } from "@heroicons/vue/24/outline";
+import { ArrowRightCircleIcon } from "@heroicons/vue/24/outline";
 import { relativeDate } from "@/Utilities/date.js";
-import LinkReversed from "@/Components/LinkReversed.vue";
+import LinkCategory from "@/Components/LinkCategory.vue";
 
-defineProps(["posts", "selectedCategory"]);
+defineProps(["posts", "categories", "selectedCategory"]);
 
 const formattedDate = (post) => relativeDate(post.published_at);
 

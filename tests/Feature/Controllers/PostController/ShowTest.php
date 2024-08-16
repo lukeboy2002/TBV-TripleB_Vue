@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Resources\CategoryResource;
 use App\Http\Resources\CommentResource;
 use App\Http\Resources\PostResource;
+use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Post;
 
@@ -38,4 +40,11 @@ it('will redirect if the slug is incorrect', function () {
 
     get(route('posts.show', [$post, 'foo-bar', 'page' => 2]))
         ->assertRedirect($post->showRoute(['page' => 2]));
+});
+
+it('passes categories to the view', function () {
+    $categories = Category::factory(3)->create();
+
+    get(route('posts.index'))
+        ->assertHasResource('categories', CategoryResource::collection($categories));
 });

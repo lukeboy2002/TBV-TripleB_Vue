@@ -3,8 +3,8 @@ import Banner from "@/Components/Banner.vue";
 import Footer from "@/Components/Footer.vue";
 
 import { Head } from "@inertiajs/vue3";
-import MainNavigation from "@/Components/MainNavigation.vue";
 import ModalWrapper from "@/Components/ModalWrapper.vue";
+import NavigationMain from "@/Components/NavigationMain.vue";
 
 defineProps({
   title: String
@@ -18,7 +18,7 @@ defineProps({
 
     <div>
       <Banner />
-      <MainNavigation />
+      <NavigationMain />
       <section class="px-0">
         <div v-if="$slots.hero"
              class="relative h-124">

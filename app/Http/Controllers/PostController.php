@@ -40,6 +40,8 @@ class PostController extends Controller
 
         return inertia('Posts/Index', [
             'posts' => PostResource::collection($posts),
+            'categories' => fn () => CategoryResource::collection(Category::all()),
+
             'selectedCategory' => fn () => $category ? CategoryResource::make($category) : null,
         ]);
     }
@@ -93,6 +95,7 @@ class PostController extends Controller
 
         return Inertia('Posts/Show', [
             'post' => fn () => PostResource::make($post),
+            'categories' => fn () => CategoryResource::collection(Category::all()),
             'comments' => fn () => CommentResource::collection($post->comments()
                 ->with('user')
                 ->latest()
