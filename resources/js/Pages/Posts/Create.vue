@@ -28,12 +28,21 @@
           <InputError :message="form.errors.title" class="mt-1" />
         </div>
         <div class="w-1/2">
-          Topics
+          <InputLabel for="category_id">Select a category</InputLabel>
+          <select id="category_id" v-model="form.category_id"
+                  class="bg-gray-50 border border-gray-300 text-gray-700 mb-6 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5">
+            <option v-for="category in categories"
+                    :key="category.id"
+                    :value="category.id">
+              {{ category.name }}
+            </option>
+          </select>
+          <InputError :message="form.errors.category_id" class="mt-1" />
         </div>
       </div>
       <div>
         <InputLabel class="sr-only" for="body"> Title</InputLabel>
-        <MarkdownEditor v-model="form.body">
+        <MarkdownEditor v-model="form.body" class="bg-gray-50">
           <template #toolbar="{ editor }">
             <li v-if="! isInProduction()">
               <button class="px-3 py-2"
@@ -87,6 +96,7 @@ import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import { isInProduction } from "@/Utilities/enviroment.js";
 
+const props = defineProps(["categories"]);
 const date = ref();
 
 const change = (e) => {
@@ -94,6 +104,7 @@ const change = (e) => {
 };
 
 const form = useForm({
+  category_id: props.categories[0].id,
   title: null,
   body: null,
   image: null,

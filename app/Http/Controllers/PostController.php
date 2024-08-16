@@ -55,6 +55,7 @@ class PostController extends Controller
         $data = $request->validate([
             'title' => ['required', 'string', 'min:10', 'max:120'],
             'body' => ['required', 'string', 'min:100', 'max:10000'],
+            'category_id' => ['required', 'exists:categories,id'],
             'image' => ['nullable', 'image', 'max:2048'],
             'published_at' => ['nullable', 'date'],
             'featured' => ['boolean'],
@@ -79,7 +80,9 @@ class PostController extends Controller
     {
         Gate::authorize('create', $post);
 
-        return inertia('Posts/Create');
+        return inertia('Posts/Create', [
+            'categories' => fn () => CategoryResource::collection(Category::all()),
+        ]);
     }
 
     /**

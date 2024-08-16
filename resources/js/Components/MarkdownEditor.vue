@@ -1,6 +1,6 @@
 <template>
   <div v-if="editor"
-       class="bg-white rounded-md shadow-lg ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-orange-500">
+       class="bg-gray-50 rounded-md shadow-lg ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-orange-500">
     <menu class="flex divide-x border-b">
       <li>
         <button :class="[editor.isActive('heading', { level: 2 }) ? 'bg-orange-500 text-white' : 'hover:bg-gray-200']"
