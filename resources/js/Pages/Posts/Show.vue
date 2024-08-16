@@ -1,4 +1,7 @@
 <template>
+  <Head>
+    <link :href="post.routes.show" rel="canonical" />
+  </Head>
   <AppLayout :title="post.title">
     <template #hero>
       <img :alt="post.title"
@@ -47,7 +50,7 @@
         <div>
           <InputLabel class="sr-only" for="body">Comment</InputLabel>
 
-          <MarkdownEditor id="body" ref="commentTextAreaRef" v-model="commentForm.body" editorClass="min-h-[160px]"
+          <MarkdownEditor id="body" ref="commentTextAreaRef" v-model="commentForm.body" editorClass="!min-h-[160px]"
                           placeholder="Leave a comment" />
           <!--          <TextArea id="body"-->
           <!--                    ref="commentTextAreaRef"-->
@@ -115,7 +118,7 @@ import ButtonSecondary from "@/Components/ButtonSecondary.vue";
 import { HeartIcon } from "@heroicons/vue/24/outline";
 import { relativeDate } from "@/Utilities/date.js";
 import { computed, ref } from "vue";
-import { router, useForm } from "@inertiajs/vue3";
+import { router, useForm, Head } from "@inertiajs/vue3";
 import { useConfirm } from "@/Utilities/Composables/useConfirm.js";
 import MarkdownEditor from "@/Components/MarkdownEditor.vue";
 import LinkDefault from "@/Components/LinkDefault.vue";
@@ -168,9 +171,17 @@ const deleteComment = async (commentId) => {
   if (!await confirmation("Are you sure you want to delete this comment?")) {
     return;
   }
-  router.delete(route("comments.destroy", { comment: commentId, page: props.comments.meta.current_page }), {
-    preserveScroll: true
-  });
+  router.delete(
+    route("comments.destroy", {
+      comment: commentId,
+      page: props.comments.data.length > 1
+        ? props.comments.meta.current_page
+        : Math.max(props.comments.meta.current_page - 1, 1)
+    }),
+    {
+      preserveScroll: true
+    }
+  );
 };
 
 </script>
