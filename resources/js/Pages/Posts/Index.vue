@@ -51,7 +51,7 @@
               class="bg-orange-100 text-orange-800 border hover:border-orange-500 focus:outline-none focus:border-orange-500 text-xs font-medium me-2 px-2.5 py-0.5 rounded">{{ post.category.name
               }}
             </a>
-            <div>Likes</div>
+            <div>{{ post.likes_count }} Likes</div>
           </div>
           <div class="flex justify-between items-center uppercase text-sm text-gray-500">
 
@@ -60,14 +60,12 @@
               <div>{{ formattedDate(post) }}</div>
             </div>
             <div>
-              Comment(s)
+              {{ post.comments_count }} Comment(s)
             </div>
           </div>
 
           <p class="mb-5 whitespace-pre-wrap font-light text-gray-700 dark:text-gray-50"
              v-html="getShortBody(post.html)">
-
-
           </p>
         </main>
         <footer class="flex justify-end">

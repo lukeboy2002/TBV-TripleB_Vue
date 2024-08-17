@@ -15,30 +15,32 @@
       </div>
     </template>
 
-    <Article class="shadow-xl">
-      <header class="flex justify-between items-center text-gray-500 mb-4">
-        <div class="flex items-center space-x-4 mt-6">
-          <a
-            :href="route('posts.index', { category: post.category.slug })"
-            class="bg-orange-100 font-semibold uppercase text-orange-800 border hover:border-orange-500 focus:outline-none focus:border-orange-500 text-xs font-medium me-2 px-2.5 py-0.5 rounded">
-            {{ post.category.name }}
-          </a>
+    <Article class="shadow-xl pb-8">
+      <header class="mb-2">
+        <div class="flex justify-between items-center text-gray-500">
+          <div class="flex items-center space-x-4 mt-6">
+            <a
+              :href="route('posts.index', { category: post.category.slug })"
+              class="bg-orange-100 font-semibold uppercase text-orange-800 border hover:border-orange-500 focus:outline-none focus:border-orange-500 text-xs font-medium me-2 px-2.5 py-0.5 rounded">
+              {{ post.category.name }}
+            </a>
+          </div>
+          <div>
+            <div class="flex space-x-4 uppercase">
+              <div>BY <span class="text-orange-500 font-semibold">{{ post.user.username }}</span></div>
+              <div>{{ formattedDate }}</div>
+            </div>
+          </div>
         </div>
-        <div>
-          <div class="flex space-x-4 uppercase">
-            <div>BY <span class="text-orange-500 font-semibold">{{ post.user.username }}</span></div>
-            <div>{{ formattedDate }}</div>
+        <div class="flex justify-end items-center text-xs">
+          <HeartIcon class="mr-1 size-3" />
+          <div>
+            {{ post.likes_count }} Likes
           </div>
         </div>
       </header>
       <main class="prose prose-sm max-w-none" v-html="post.html">
       </main>
-      <footer class="flex justify-end items-center text-gray-500 text-xs">
-        <HeartIcon class="mr-1 size-3" />
-        <div>
-          Like
-        </div>
-      </footer>
     </Article>
 
     <div class="ml-6 pt-4">

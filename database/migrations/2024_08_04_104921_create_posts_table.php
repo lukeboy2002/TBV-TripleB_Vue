@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->timestamp('published_at')->nullable();
             $table->boolean('featured')->default(false);
+            $table->unsignedBigInteger('comments_count')->default(0);
+            $table->unsignedBigInteger('likes_count')->default(0);
             $table->timestamps();
         });
     }

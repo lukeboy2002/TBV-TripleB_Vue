@@ -16,9 +16,8 @@
         </p>
       </div>
       <div class="text-sm text-gray-500 dark:text-gray-400 flex items-center space-x-1">
-        <div class="text-xs">10</div>
         <HeartIcon class="size-3" />
-        <div>likes</div>
+        <div>{{ comment.likes_count }}</div>
       </div>
     </header>
     <main class="p-3 prose prose-sm max-w-none" v-html="comment.html"></main>
