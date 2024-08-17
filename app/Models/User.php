@@ -61,6 +61,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Comment::class);
     }
 
+    public function likes(): HasMany
+    {
+        return $this->hasMany(Like::class);
+    }
+
     protected function defaultProfilePhotoUrl()
     {
         $username = trim(collect(explode(' ', $this->username))->map(function ($segment) {
