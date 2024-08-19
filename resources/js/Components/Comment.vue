@@ -15,14 +15,32 @@
           {{ relativeDate(comment.created_at) }}
         </p>
       </div>
-      <div class="text-sm text-gray-500 dark:text-gray-400 flex items-center space-x-1">
-        <HeartIcon class="size-3" />
-        <div>{{ comment.likes_count }}</div>
+      <div class="text-sm text-gray-500 dark:text-gray-400 flex items-center space-x-4">
+        <div class="flex items-center space-x-1">
+          <HeartIcon class="size-3" />
+          <div>{{ comment.likes_count }}</div>
+        </div>
       </div>
     </header>
     <main class="p-3 prose prose-sm max-w-none" v-html="comment.html"></main>
 
-    <footer class="flex justify-end items-center text-xs space-x-1 empty:hidden">
+    <footer class="flex justify-between items-center text-xs ml-4 space-x-1 empty:hidden">
+      <div v-if="$page.props.auth.user" class="flex items-center justify-end space-x-6">
+        <Link v-if="comment.can.like"
+              :href="route('likes.store', ['comment', comment.id])"
+              class="flex items-center space-x-2 text-green-700 hover:text-green-500 transition-colors"
+              method="post" preserve-scroll>
+          <HandThumbUpIcon class="size-4" />
+          <span class="text-xs">like</span>
+        </Link>
+        <Link v-else :href="route('likes.destroy', ['comment', comment.id])"
+              class="flex items-center space-x-2 text-red-700 hover:text-red-500 transition-colors"
+              method="delete"
+              preserve-scroll>
+          <HandThumbDownIcon class="size-4" />
+          <span class="text-xs">unlike</span>
+        </Link>
+      </div>
       <form v-if="comment.can?.update" @submit.prevent="$emit('edit', comment.id)">
         <ButtonIcon
           class="text-green-500 border-green-500 hover:bg-green-500 hover:text-white focus:bg-green-500 focus:text-white">
@@ -44,6 +62,8 @@ import ButtonIcon from "@/Components/ButtonIcon.vue";
 
 import { HeartIcon, PencilSquareIcon, TrashIcon } from "@heroicons/vue/24/outline/index.js";
 import { relativeDate } from "@/Utilities/date.js";
+import { HandThumbDownIcon, HandThumbUpIcon } from "@heroicons/vue/20/solid/index.js";
+import { Link } from "@inertiajs/vue3";
 
 const props = defineProps(["comment"]);
 

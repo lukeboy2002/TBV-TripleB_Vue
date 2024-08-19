@@ -41,6 +41,25 @@
       </header>
       <main class="prose prose-sm max-w-none" v-html="post.html">
       </main>
+      <footer>
+        <div v-if="$page.props.auth.user" class="flex items-center justify-end space-x-6">
+          <Link v-if="post.can.like"
+                :href="route('likes.store', ['post', post.id])"
+                class="flex items-center space-x-2 text-green-700 hover:text-green-500 transition-colors"
+                method="post" preserve-scroll>
+            <HandThumbUpIcon class="size-4" />
+            <span class="text-xs">like post</span>
+          </Link>
+          <Link v-else
+                :href="route('likes.destroy', ['post', post.id])"
+                class="flex items-center space-x-2 text-red-700 hover:text-red-500 transition-colors"
+                method="delete"
+                preserve-scroll>
+            <HandThumbDownIcon class="size-4" />
+            <span class="text-xs">unlike post</span>
+          </Link>
+        </div>
+      </footer>
     </Article>
 
     <div class="ml-6 pt-4">
@@ -114,16 +133,17 @@ import Pagination from "@/Components/Pagination.vue";
 import InputLabel from "@/Components/form/InputLabel.vue";
 import InputError from "@/Components/form/InputError.vue";
 import ButtonPrimary from "@/Components/ButtonPrimary.vue";
-
 import ButtonSecondary from "@/Components/ButtonSecondary.vue";
-
-import { HeartIcon } from "@heroicons/vue/24/outline";
-import { relativeDate } from "@/Utilities/date.js";
-import { computed, ref } from "vue";
-import { router, useForm, Head } from "@inertiajs/vue3";
-import { useConfirm } from "@/Utilities/Composables/useConfirm.js";
 import MarkdownEditor from "@/Components/MarkdownEditor.vue";
 import LinkDefault from "@/Components/LinkDefault.vue";
+import LinkReversed from "@/Components/LinkReversed.vue";
+
+import { HeartIcon } from "@heroicons/vue/24/outline";
+import { HandThumbUpIcon, HandThumbDownIcon } from "@heroicons/vue/20/solid";
+import { relativeDate } from "@/Utilities/date.js";
+import { computed, ref } from "vue";
+import { router, useForm, Head, Link } from "@inertiajs/vue3";
+import { useConfirm } from "@/Utilities/Composables/useConfirm.js";
 
 const props = defineProps(["post", "categories", "comments"]);
 

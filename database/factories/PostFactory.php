@@ -34,6 +34,7 @@ class PostFactory extends Factory
             'image' => fake()->imageUrl(),
             'featured' => fake()->boolean,
             'published_at' => fake()->dateTimeBetween('-1 Week', '+1 week'),
+            'likes_count' => 0,
         ];
     }
 }

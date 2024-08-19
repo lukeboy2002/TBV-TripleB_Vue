@@ -22,6 +22,8 @@ class CommentController extends Controller
             'user_id' => $request->user()->id,
         ]);
 
+        $post->increment('comments_count');
+
         return redirect($post->showRoute())
             ->banner('Comment added');
     }
@@ -45,9 +47,13 @@ class CommentController extends Controller
      */
     public function destroy(Request $request, Comment $comment)
     {
+        $post = $comment->post;
+
         Gate::authorize('delete', $comment);
 
         $comment->delete();
+
+        $post->decrement('comments_count');
 
         return redirect($comment->post->showRoute(['page' => $request->query('page')]))
             ->banner('Comment deleted.');
