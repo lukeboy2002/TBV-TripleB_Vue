@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import NavLink from "@/Components/NavLink.vue";
+import ApplicationLogo from "@/Components/ApplicationLogo.vue";
+import LinkNav from "@/Components/LinkNav.vue";
+import LinkDropdown from "@/Components/LinkDropdown.vue";
 import Dropdown from "@/Components/Dropdown.vue";
-import DropdownLink from "@/Components/DropdownLink.vue";
 
 import { router } from "@inertiajs/vue3";
 import { ref } from "vue";
-import ApplicationLogo from "@/Components/ApplicationLogo.vue";
-import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
+import LinkNavResponsive from "@/Components/LinkNavResponsive.vue";
 
 const showingNavigationDropdown = ref(false);
 
@@ -77,13 +77,13 @@ const menu = [
             <!-- Navigation Links -->
             <div class="hidden space-x-4 sm:-my-px sm:flex">
               <template v-for="item in menu" :key="item.name">
-                <NavLink
+                <LinkNav
                   v-if="item.when ? item.when() : true"
                   :active="route().current(item.route)"
                   :href="item.url"
                 >
                   {{ item.name }}
-                </NavLink>
+                </LinkNav>
               </template>
               <div class="border border-l border-orange-500/30"></div>
             </div>
@@ -133,30 +133,30 @@ const menu = [
                         Manage Account
                       </div>
 
-                      <DropdownLink :href="route('profile.show')">
+                      <LinkDropdown :href="route('profile.show')">
                         Profile
-                      </DropdownLink>
+                      </LinkDropdown>
 
                       <div class="border-t border-gray-200" />
 
                       <!-- Authentication -->
                       <form @submit.prevent="logout">
-                        <DropdownLink as="button">
+                        <LinkDropdown as="button">
                           Log Out
-                        </DropdownLink>
+                        </LinkDropdown>
                       </form>
                     </template>
                   </Dropdown>
                 </div>
               </div>
               <div v-else class="space-x-2">
-                <NavLink :href="route('login')">
+                <LinkNav :href="route('login')">
                   Log in
-                </NavLink>
+                </LinkNav>
 
-                <NavLink :href="route('register')">
+                <LinkNav :href="route('register')">
                   Register
-                </NavLink>
+                </LinkNav>
               </div>
             </div>
           </div>
@@ -205,13 +205,13 @@ const menu = [
       >
         <div class="space-y-1 pb-3 pt-2">
           <template v-for="item in menu" :key="item.name">
-            <ResponsiveNavLink
+            <LinkNavResponsive
               v-if="item.when ? item.when() : true"
               :active="route().current(item.route)"
               :href="item.url"
             >
               {{ item.name }}
-            </ResponsiveNavLink>
+            </LinkNavResponsive>
           </template>
         </div>
 
@@ -241,29 +241,29 @@ const menu = [
             </div>
 
             <div class="mt-3 space-y-1">
-              <ResponsiveNavLink
+              <LinkNavResponsive
                 :active="route().current('profile.show')"
                 :href="route('profile.show')"
               >
                 Profile
-              </ResponsiveNavLink>
+              </LinkNavResponsive>
 
               <!-- Authentication -->
               <form method="POST" @submit.prevent="logout">
-                <ResponsiveNavLink as="button">
+                <LinkNavResponsive as="button">
                   Log Out
-                </ResponsiveNavLink>
+                </LinkNavResponsive>
               </form>
             </div>
           </div>
           <div v-else class="mt-3 space-y-1">
-            <ResponsiveNavLink :href="route('login')">
+            <LinkNavResponsive :href="route('login')">
               Log in
-            </ResponsiveNavLink>
+            </LinkNavResponsive>
 
-            <ResponsiveNavLink :href="route('register')">
+            <LinkNavResponsive :href="route('register')">
               Register
-            </ResponsiveNavLink>
+            </LinkNavResponsive>
           </div>
         </div>
       </div>

@@ -13,7 +13,7 @@ defineProps({
 <template>
   <div class="flex justify-between flex-col h-dvh">
     <Head :title="title" />
-    
+
     <div>
       <Banner />
       <MainNavigation />
