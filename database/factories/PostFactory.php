@@ -2,15 +2,23 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
+use App\Support\PostFixtures;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Collection;
 
 /**
  * @extends Factory<Post>
  */
 class PostFactory extends Factory
 {
+    public function withFixture(): static
+    {
+        return $this->sequence(...PostFixtures::getFixtures());
+    }
+
     /**
      * Define the model's default state.
      *
@@ -20,13 +28,13 @@ class PostFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
+            'category_id' => Category::factory(),
             'title' => str(fake()->sentence)->beforeLast('.')->title(),
-            'body' => fake()->realText(600),
-            //            'title' => str(fake()->sentence)->beforeLast('.')->title(),
-            //            'body' => Collection::times(4, fn () => fake()->realText(1250))->join(PHP_EOL.PHP_EOL),
+            'body' => Collection::times(4, fn () => fake()->realText(1250))->join(PHP_EOL.PHP_EOL),
             'image' => fake()->imageUrl(),
             'featured' => fake()->boolean,
             'published_at' => fake()->dateTimeBetween('-1 Week', '+1 week'),
+            'likes_count' => 0,
         ];
     }
 }

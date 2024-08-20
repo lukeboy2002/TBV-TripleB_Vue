@@ -4,7 +4,7 @@ import LinkNav from "@/Components/LinkNav.vue";
 import LinkDropdown from "@/Components/LinkDropdown.vue";
 import Dropdown from "@/Components/Dropdown.vue";
 
-import { router } from "@inertiajs/vue3";
+import { router, usePage } from "@inertiajs/vue3";
 import { ref } from "vue";
 import LinkNavResponsive from "@/Components/LinkNavResponsive.vue";
 
@@ -52,8 +52,14 @@ const menu = [
   },
   {
     name: "Blog",
-    url: route("blog"),
-    route: "blog"
+    url: route("posts.index"),
+    route: "posts.index"
+  },
+  {
+    name: "Create a Post",
+    url: route("posts.create"),
+    route: "posts.create",
+    when: () => usePage().props.permissions.create_posts
   },
   {
     name: "Contact",
@@ -75,7 +81,7 @@ const menu = [
           </div>
           <div class="flex">
             <!-- Navigation Links -->
-            <div class="hidden space-x-4 sm:-my-px sm:flex">
+            <div class="hidden space-x-4 md:-my-px md:flex">
               <template v-for="item in menu" :key="item.name">
                 <LinkNav
                   v-if="item.when ? item.when() : true"
@@ -88,7 +94,7 @@ const menu = [
               <div class="border border-l border-orange-500/30"></div>
             </div>
 
-            <div class="hidden sm:ms-6 sm:flex sm:items-center sm:space-x-4">
+            <div class="hidden md:ms-6 md:flex md:items-center md:space-x-4">
               <div v-if="$page.props.auth.user" class="relative ms-3">
                 <!-- Settings Dropdown -->
                 <div class="relative ms-3">
@@ -161,7 +167,7 @@ const menu = [
             </div>
           </div>
           <!-- Hamburger -->
-          <div class="-me-2 flex items-center space-x-2 sm:hidden">
+          <div class="-me-2 flex items-center space-x-2 md:hidden">
             <button
               class="inline-flex items-center justify-center rounded-md p-2 text-orange-500 transition duration-150 ease-in-out hover:bg-menu/50 hover:text-orange-500 focus:bg-menu/50 focus:text-orange-500 focus:outline-none dark:hover:bg-gray-600 dark:focus:bg-gray-800"
               @click=" showingNavigationDropdown = !showingNavigationDropdown "
@@ -201,7 +207,7 @@ const menu = [
         :class="{ block: showingNavigationDropdown,
                   hidden: !showingNavigationDropdown,
                 }"
-        class="sm:hidden"
+        class="md:hidden"
       >
         <div class="space-y-1 pb-3 pt-2">
           <template v-for="item in menu" :key="item.name">

@@ -2,11 +2,11 @@
 import { Head, Link, useForm } from "@inertiajs/vue3";
 import AuthenticationCard from "@/Components/AuthenticationCard.vue";
 import AuthenticationCardLogo from "@/Components/AuthenticationCardLogo.vue";
-import Checkbox from "@/Components/Checkbox.vue";
-import InputError from "@/Components/InputError.vue";
-import InputLabel from "@/Components/InputLabel.vue";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
-import TextInput from "@/Components/TextInput.vue";
+import Checkbox from "@/Components/form/Checkbox.vue";
+import InputError from "@/Components/form/InputError.vue";
+import InputLabel from "@/Components/form/InputLabel.vue";
+import PrimaryButton from "@/Components/ButtonPrimary.vue";
+import TextInput from "@/Components/form/TextInput.vue";
 
 const form = useForm({
   username: "",
@@ -91,9 +91,11 @@ const submit = () => {
             <Checkbox id="terms" v-model:checked="form.terms" name="terms" required />
 
             <div class="ms-2">
-              I agree to the <a :href="route('terms.show')" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              I agree to the <a :href="route('terms.show')"
+                                class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                 target="_blank">Terms
-              of Service</a> and <a :href="route('policy.show')" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              of Service</a> and <a :href="route('policy.show')"
+                                    class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                     target="_blank">Privacy
               Policy</a>
             </div>

@@ -1,0 +1,211 @@
+<template>
+  <div v-if="editor"
+       class="bg-gray-50 rounded-md shadow-lg ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-orange-500">
+    <menu class="flex divide-x border-b">
+      <li>
+        <button :class="[editor.isActive('heading', { level: 2 }) ? 'bg-orange-500 text-white' : 'hover:bg-gray-200']"
+                class="px-3 py-2"
+                title="Heading 1"
+                type="button"
+                @click="() => editor.chain().focus().toggleHeading({ level: 2 }).run()">
+          <i class="ri-h-1"></i>
+        </button>
+      </li>
+      <li>
+        <button :class="[editor.isActive('heading', { level: 3 }) ? 'bg-orange-500 text-white' : 'hover:bg-gray-200']"
+                class="px-3 py-2"
+                title="Heading 2"
+                type="button"
+                @click="() => editor.chain().focus().toggleHeading({ level: 3 }).run()">
+          <i class="ri-h-2"></i>
+        </button>
+      </li>
+      <li>
+        <button :class="[editor.isActive('heading', { level: 4 }) ? 'bg-orange-500 text-white' : 'hover:bg-gray-200']"
+                class="px-3 py-2"
+                title="Heading 3"
+                type="button"
+                @click="() => editor.chain().focus().toggleHeading({ level: 4 }).run()">
+          <i class="ri-h-3"></i>
+        </button>
+      </li>
+      <li>
+        <button :class="[editor.isActive('bold') ? 'bg-orange-500 text-white' : 'hover:bg-gray-200']"
+                class="px-3 py-2 rounded-tl-lg"
+                title="Bold"
+                type="button"
+                @click="editor.chain().focus().toggleBold().run()">
+          <i class="ri-bold"></i>
+        </button>
+      </li>
+      <li>
+        <button :class="[editor.isActive('italic') ? 'bg-orange-500 text-white' : 'hover:bg-gray-200']"
+                class="px-3 py-2"
+                title="Italic"
+                type="button"
+                @click="editor.chain().focus().toggleItalic().run()">
+          <i class="ri-italic"></i>
+        </button>
+      </li>
+      <li>
+        <button :class="[editor.isActive('strike') ? 'bg-orange-500 text-white' : 'hover:bg-gray-200']"
+                class="px-3 py-2"
+                title="Strikethrough"
+                type="button"
+                @click="editor.chain().focus().toggleStrike().run()">
+          <i class="ri-strikethrough"></i>
+        </button>
+      </li>
+      <li>
+        <button :class="[editor.isActive('blockquote') ? 'bg-orange-500 text-white' : 'hover:bg-gray-200']"
+                class="px-3 py-2"
+                title="Blockquote"
+                type="button"
+                @click="editor.chain().focus().toggleBlockquote().run()">
+          <i class="ri-double-quotes-l"></i>
+        </button>
+      </li>
+      <li>
+        <button :class="[editor.isActive('bulletList') ? 'bg-orange-500 text-white' : 'hover:bg-gray-200']"
+                class="px-3 py-2"
+                title="Bullet list"
+                type="button"
+                @click="() => editor.chain().focus().toggleBulletList().run()">
+          <i class="ri-list-unordered"></i>
+        </button>
+      </li>
+      <li>
+        <button :class="[editor.isActive('orderedList') ? 'bg-orange-500 text-white' : 'hover:bg-gray-200']"
+                class="px-3 py-2"
+                title="Numeric list"
+                type="button"
+                @click="() => editor.chain().focus().toggleOrderedList().run()">
+          <i class="ri-list-ordered"></i>
+        </button>
+      </li>
+      <li>
+        <button :class="[editor.isActive('orderedList') ? 'bg-orange-500 text-white' : 'hover:bg-gray-200']"
+                class="px-3 py-2"
+                title="Numeric list"
+                type="button"
+                @click="() => editor.chain().focus().toggleOrderedList().run()">
+          <i class="ri-list-ordered"></i>
+        </button>
+      </li>
+      <li>
+        <button :class="[editor.isActive('undo',) ? 'bg-orange-500 text-white' : 'hover:bg-gray-200']"
+                class="px-3 py-2"
+                title="Undo"
+                type="button"
+                @click="() => editor.chain().focus().undo().run()">
+          <i class="ri-arrow-go-back-line"></i>
+        </button>
+      </li>
+      <li>
+        <button :class="[editor.isActive('redo',) ? 'bg-orange-500 text-white' : 'hover:bg-gray-200']"
+                class="px-3 py-2"
+                title="Redo"
+                type="button"
+                @click="() => editor.chain().focus().redo().run()">
+          <i class="ri-arrow-go-forward-line"></i>
+        </button>
+      </li>
+      <li>
+        <button :class="[editor.isActive('setHorizontalRule',) ? 'bg-orange-500 text-white' : 'hover:bg-gray-200']"
+                class="px-3 py-2"
+                title="HorizontalRule"
+                type="button"
+                @click="() => editor.chain().setHorizontalRule().run()">
+          Hr
+        </button>
+      </li>
+      <li>
+        <button :class="[editor.isActive('link') ? 'bg-orange-500 text-white' : 'hover:bg-gray-200']"
+                class="px-3 py-2"
+                title="Add link"
+                type="button"
+                @click="promptUserForHref">
+          <i class="ri-link"></i>
+        </button>
+      </li>
+      <slot :editor="editor" name="toolbar" />
+    </menu>
+    <EditorContent :editor="editor" />
+  </div>
+</template>
+
+<script setup>
+import "remixicon/fonts/remixicon.css";
+
+import { EditorContent, useEditor } from "@tiptap/vue-3";
+import { StarterKit } from "@tiptap/starter-kit";
+import { Link } from "@tiptap/extension-link";
+import { Markdown } from "tiptap-markdown";
+import { Placeholder } from "@tiptap/extension-placeholder";
+import { onMounted, watch } from "vue";
+
+const props = defineProps({
+  editorClass: "",
+  placeholder: null
+});
+
+const model = defineModel();
+
+const editor = useEditor({
+  extensions: [
+    StarterKit.configure({
+      heading: {
+        levels: [2, 3, 4]
+      },
+      code: false,
+      codeBlock: false
+    }),
+    Link,
+    Markdown,
+    Placeholder.configure({
+      placeholder: props.placeholder
+    })
+
+  ],
+  editorProps: {
+    attributes: {
+      class: `min-h-[512px] prose prose-sm max-w-none py-1.5 px-3 ${props.editorClass}`
+    }
+  },
+  onUpdate: () => model.value = editor.value?.storage.markdown.getMarkdown()
+});
+
+defineExpose({ focus: () => editor.value.commands.focus() });
+
+onMounted(() => {
+  watch(model, (value) => {
+    if (value === editor.value?.storage.markdown.getMarkdown()) {
+      return;
+    }
+
+    editor.value?.commands.setContent(value);
+  }, { immediate: true });
+});
+
+const promptUserForHref = () => {
+  if (editor.value?.isActive("link")) {
+    return editor.value?.chain().unsetLink().run();
+  }
+
+  const href = prompt("Where do you want to link to?");
+
+  if (!href) {
+    return editor.value?.chain().focus().run();
+  }
+
+  return editor.value?.chain().focus().setLink({ href }).run();
+};
+
+</script>
+
+<style scoped>
+:deep(.tiptap p.is-editor-empty:first-child::before) {
+  @apply text-gray-400 float-left h-0 pointer-events-none;
+  content: attr(data-placeholder);
+}
+</style>
