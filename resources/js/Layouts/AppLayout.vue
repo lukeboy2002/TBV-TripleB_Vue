@@ -1,5 +1,4 @@
 <script setup>
-import Banner from "@/Components/Banner.vue";
 import Footer from "@/Components/Footer.vue";
 
 import { Head } from "@inertiajs/vue3";

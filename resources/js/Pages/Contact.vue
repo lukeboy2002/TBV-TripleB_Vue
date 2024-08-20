@@ -1,6 +1,7 @@
 <template>
   <AppLayout title="Contact">
     MY CONTACT
+    
   </AppLayout>
 </template>
 <script lang="ts" setup>
