@@ -32,7 +32,7 @@ class PostResource extends JsonResource
             'title' => $this->title,
             'body' => $this->body,
             'html' => $this->html,
-            'comments_count' => Number::abbreviate($this->comments_count),
+            'comments_count' => $this->comments_count,
             'likes_count' => Number::abbreviate($this->likes_count),
             'image' => $this->image,
             'published_at' => $this->published_at,

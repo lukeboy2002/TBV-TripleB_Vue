@@ -30,19 +30,24 @@ class PostController extends Controller
     //                ->paginate()),
     //        ]);
     //    }
-    public function index(?Category $category = null)
+    public function index(Request $request, ?Category $category = null)
     {
         $posts = Post::with(['user', 'category'])
             ->when($category, fn (Builder $query) => $query->whereBelongsTo($category))
+            ->when(
+                $request->query('query'),
+                fn (Builder $query) => $query->whereAny(['title', 'body'], 'like', '%'.$request->query('query').'%')
+            )
             ->latest()
             ->latest('id')
-            ->paginate();
+            ->paginate()
+            ->withQueryString();
 
         return inertia('Posts/Index', [
             'posts' => PostResource::collection($posts),
             'categories' => fn () => CategoryResource::collection(Category::all()),
-
             'selectedCategory' => fn () => $category ? CategoryResource::make($category) : null,
+            'query' => $request->query('query'),
         ]);
     }
 

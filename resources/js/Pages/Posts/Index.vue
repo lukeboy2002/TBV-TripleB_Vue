@@ -15,21 +15,50 @@
       </div>
     </template>
     <div>
-      <menu class="flex space-x-1 mt-3 overflow-x-auto py-1">
-        <li>
-          <LinkCategory :filled="! selectedCategory" :href="route('posts.index')">
-            All Posts
-          </LinkCategory>
-        </li>
-        <li v-for="category in categories" :key="category.id">
-          <LinkCategory :filled="category.id === selectedCategory?.id"
-                        :href="route('posts.index', { category: category.slug })"
-          >
-            {{ category.name }}
-          </LinkCategory>
-        </li>
-      </menu>
-      <p v-if="selectedCategory" class="mt-1 text-xs text-orange-500 italic empty:hidden">
+      <div class="md:flex sm:justify-end md:justify-between items-center mt-3  py-1">
+        <menu class="hidden md:flex justify-between items-center overflow-x-auto">
+          <li>
+            <LinkCategory :filled="! selectedCategory" :href="route('posts.index', { query: searchForm.query })">
+              All Posts
+            </LinkCategory>
+          </li>
+          <li v-for="category in categories" :key="category.id">
+            <LinkCategory :filled="category.id === selectedCategory?.id"
+                          :href="route('posts.index', { category: category.slug, query: searchForm.query })"
+            >
+              {{ category.name }}
+            </LinkCategory>
+          </li>
+        </menu>
+
+        <form class="w-full md:w-1/4" @submit.prevent="search">
+          <label class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+                 for="query">Search</label>
+          <div class="relative">
+            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+              <MagnifyingGlassIcon class="size-4 text-orange-500" />
+            </div>
+            <TextInput id="query"
+                       v-model="searchForm.query"
+                       class="block w-full p-2 ps-10 text-sm"
+                       placeholder="Search ..."
+                       type="search" />
+            <div class="absolute flex end-2.5 bottom-1.5">
+              <ButtonIcon class="bg-orange-500" type="submit">
+                <MagnifyingGlassIcon class="size-4 text-white" />
+              </ButtonIcon>
+              <ButtonIcon v-if="searchForm.query"
+                          class="bg-red-500"
+                          @click="clearSearch">
+                <XCircleIcon class="size-4 text-white" />
+              </ButtonIcon>
+            </div>
+          </div>
+          <!--          <ButtonDanger v-if="searchForm.query" @click="clearSearch">Clear</ButtonDanger>-->
+        </form>
+
+      </div>
+      <p v-if="selectedCategory" class="hidden md:block mt-1 text-xs text-orange-500 italic empty:hidden">
         {{ selectedCategory.description }}
       </p>
     </div>
@@ -90,12 +119,14 @@ import CardBlogPost from "@/Components/CardBlogPost.vue";
 import Pagination from "@/Components/Pagination.vue";
 import LinkDefault from "@/Components/LinkDefault.vue";
 
-import { Link } from "@inertiajs/vue3";
-import { ArrowRightCircleIcon } from "@heroicons/vue/24/outline";
+import { Link, useForm, usePage } from "@inertiajs/vue3";
+import { ArrowRightCircleIcon, MagnifyingGlassIcon, XCircleIcon } from "@heroicons/vue/24/outline";
 import { relativeDate } from "@/Utilities/date.js";
 import LinkCategory from "@/Components/LinkCategory.vue";
+import TextInput from "@/Components/form/TextInput.vue";
+import ButtonIcon from "@/Components/ButtonIcon.vue";
 
-defineProps(["posts", "categories", "selectedCategory"]);
+const props = defineProps(["posts", "categories", "selectedCategory", "query"]);
 
 const formattedDate = (post) => relativeDate(post.published_at);
 
@@ -106,4 +137,18 @@ const getShortBody = (html) => {
   }
   return html.substring(0, maxLength) + "...";
 };
+
+const searchForm = useForm({
+  query: props.query,
+  page: 1
+});
+
+const page = usePage();
+const search = () => searchForm.get(page.url);
+
+const clearSearch = () => {
+  searchForm.query = "";
+  search();
+};
+
 </script>
