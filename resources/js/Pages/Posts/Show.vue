@@ -21,7 +21,7 @@
           <div class="flex items-center space-x-4 mt-6">
             <a
               :href="route('posts.index', { category: post.category.slug })"
-              class="bg-orange-100 font-semibold uppercase text-orange-800 border hover:border-orange-500 focus:outline-none focus:border-orange-500 text-xs font-medium me-2 px-2.5 py-0.5 rounded">
+              class="bg-orange-100 font-semibold uppercase text-orange-800 border hover:border-orange-500 focus:outline-none focus:border-orange-500 text-xs me-2 px-2.5 py-0.5 rounded">
               {{ post.category.name }}
             </a>
           </div>
@@ -73,11 +73,6 @@
 
           <MarkdownEditor id="body" ref="commentTextAreaRef" v-model="commentForm.body" editorClass="!min-h-[160px]"
                           placeholder="Leave a comment" />
-          <!--          <TextArea id="body"-->
-          <!--                    ref="commentTextAreaRef"-->
-          <!--                    v-model="commentForm.body"-->
-          <!--                    placeholder="Leave a comment"-->
-          <!--          />-->
           <InputError :message="commentForm.errors.body"
                       class="mt-1"
           />

@@ -41,18 +41,20 @@
           <span class="text-xs">unlike</span>
         </Link>
       </div>
-      <form v-if="comment.can?.update" @submit.prevent="$emit('edit', comment.id)">
-        <ButtonIcon
-          class="text-green-500 border-green-500 hover:bg-green-500 hover:text-white focus:bg-green-500 focus:text-white">
-          <PencilSquareIcon class="size-4" />
-        </ButtonIcon>
-      </form>
-      <form v-if="comment.can?.delete" @submit.prevent="$emit('delete', comment.id)">
-        <ButtonIcon
-          class="text-red-500 border-red-500 hover:bg-red-500 hover:text-white focus:bg-red-500 focus:text-white">
-          <TrashIcon class="size-4" />
-        </ButtonIcon>
-      </form>
+      <div class="flex space-x-2">
+        <form v-if="comment.can?.update" @submit.prevent="$emit('edit', comment.id)">
+          <ButtonIcon
+            class="text-green-500 border-green-500 hover:bg-green-500 hover:text-white focus:bg-green-500 focus:text-white">
+            <PencilSquareIcon class="size-4" />
+          </ButtonIcon>
+        </form>
+        <form v-if="comment.can?.delete" @submit.prevent="$emit('delete', comment.id)">
+          <ButtonIcon
+            class="text-red-500 border-red-500 hover:bg-red-500 hover:text-white focus:bg-red-500 focus:text-white">
+            <TrashIcon class="size-4" />
+          </ButtonIcon>
+        </form>
+      </div>
     </footer>
   </Article>
 </template>

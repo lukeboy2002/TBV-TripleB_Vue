@@ -54,9 +54,7 @@
               </ButtonIcon>
             </div>
           </div>
-          <!--          <ButtonDanger v-if="searchForm.query" @click="clearSearch">Clear</ButtonDanger>-->
         </form>
-
       </div>
       <p v-if="selectedCategory" class="hidden md:block mt-1 text-xs text-orange-500 italic empty:hidden">
         {{ selectedCategory.description }}
@@ -119,8 +117,8 @@ import CardBlogPost from "@/Components/CardBlogPost.vue";
 import Pagination from "@/Components/Pagination.vue";
 import LinkDefault from "@/Components/LinkDefault.vue";
 
-import { Link, useForm, usePage } from "@inertiajs/vue3";
-import { ArrowRightCircleIcon, MagnifyingGlassIcon, XCircleIcon } from "@heroicons/vue/24/outline";
+import { useForm, usePage } from "@inertiajs/vue3";
+import { MagnifyingGlassIcon, XCircleIcon } from "@heroicons/vue/24/outline";
 import { relativeDate } from "@/Utilities/date.js";
 import LinkCategory from "@/Components/LinkCategory.vue";
 import TextInput from "@/Components/form/TextInput.vue";
